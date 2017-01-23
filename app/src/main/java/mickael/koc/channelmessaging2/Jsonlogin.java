@@ -5,7 +5,7 @@ package mickael.koc.channelmessaging2;
  */
 public class Jsonlogin {
     private String response;
-    private String code;
+    public int code;
     private String accesstoken;
 
     Jsonlogin()
@@ -13,6 +13,15 @@ public class Jsonlogin {
 
     public String getaccess()
     {
-        return this.accesstoken.toString();
+        if(this.accesstoken!=null)
+            return this.accesstoken.toString();
+        else
+            return "erreur";
+    }
+    public int getcode() {
+        if(this.code != 200)
+            return this.code;
+        else
+            return 0;
     }
 }

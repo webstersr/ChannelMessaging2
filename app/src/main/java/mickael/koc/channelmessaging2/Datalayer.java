@@ -24,11 +24,31 @@ public class Datalayer extends AsyncTask<String,Integer, String> {
     private ArrayList<onDownloadCompleteListener> listeners = new ArrayList<onDownloadCompleteListener> ();
     protected String username;
     protected String pwd;
+    protected String url;
+    protected HashMap<String,String> hashing;
 
     public Datalayer(String user, String pw)
     {
+        this.url="http://www.raphaelbischof.fr/messaging/?function=connect";
         this.username=user;
         this.pwd=pw;
+        HashMap<String,String> test = new HashMap<String, String>();
+        test.put("username",this.username);
+        test.put("password",this.pwd);
+        this.hashing=test;
+    }
+
+    public Datalayer(HashMap<String,String> m)
+    {
+        if(m.containsKey("url"))
+           this.url = (String)m.get("url").toString();
+
+        HashMap<String,String> test = new HashMap<String, String>();
+        for(Map.Entry<String, String> entry : m.entrySet()) {
+            if(entry.getKey()!="url")
+                test.put(entry.getKey(),entry.getValue());
+        }
+        this.hashing = test;
     }
     public void setOnNewsDownloadComplete (onDownloadCompleteListener listener)
     {
@@ -44,10 +64,8 @@ public class Datalayer extends AsyncTask<String,Integer, String> {
     protected String doInBackground(String... arg0) {
         String retour = "";
 
-        HashMap<String,String> test = new HashMap<String, String>();
-        test.put("username",this.username);
-        test.put("password",this.pwd);
-        retour = performPostCall("http://www.raphaelbischof.fr/messaging/?function=connect",test);
+
+        retour = performPostCall(this.url,this.hashing);
 
         //publishProgress(new Integer((i*100)/arg0.length));
         return retour;
