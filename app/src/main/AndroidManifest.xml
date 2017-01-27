@@ -16,7 +16,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ChannelActivity" android:label="Liste des channels" > </activity>
+        <activity android:name=".ChannelActivity" android:label="Liste des channels" >
+        </activity>
+        <activity android:name=".MessageActivity" android:label="Liste des Messages" >
+            </activity>
     </application>
 
 </manifest>
