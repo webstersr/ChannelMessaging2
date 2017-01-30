@@ -43,7 +43,7 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
     }
 
     @Override
-    public void onDownloadComplete(String news) {
+    public void onDownloadComplete(String news, int param2) {
         Gson gson = new Gson();
         Channels obj2 = gson.fromJson(news, Channels.class);
         obj2.toString();
@@ -51,6 +51,11 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
         lstchannel.setAdapter(new ChannelAdapter(getApplicationContext(),obj2.getChannels()));
         lstchannel.setOnItemClickListener(this);
         Toast.makeText(getApplicationContext(), news, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onDownloadCompleteImg(String result) {
+
     }
 
     @Override

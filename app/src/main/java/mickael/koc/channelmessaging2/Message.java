@@ -27,4 +27,8 @@ public class Message {
     {
         return this.date;
     }
+    public String getimg()
+    {
+        return this.imageUrl;
+    }
 }

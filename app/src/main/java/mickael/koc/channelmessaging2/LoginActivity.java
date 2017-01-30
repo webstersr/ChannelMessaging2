@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 public class LoginActivity extends AppCompatActivity implements onDownloadCompleteListener, View.OnClickListener {
 
     private Button btnvalider;
@@ -30,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
     }
 
     @Override
-    public void onDownloadComplete(String news) {
+    public void onDownloadComplete(String news,int param2) {
        //MARCHE :
         // Toast.makeText(getApplicationContext(),news,Toast.LENGTH_SHORT).show();
         Gson gson = new Gson();
@@ -58,12 +60,20 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
     }
 
     @Override
+    public void onDownloadCompleteImg(String result) {
+
+    }
+
+    @Override
     public void onClick(View v) {
         switch(v.getId())
         {
             case R.id.button:
-                    Datalayer d = new Datalayer(edtlogin.getText().toString(),edtpassword.getText().toString());
-                    //Datalayer d = new Datalayer("mkoc","mickaelkoc");
+                    HashMap<String,String> test = new HashMap<String, String>();
+                    test.put("url","http://www.raphaelbischof.fr/messaging/?function=connect");
+                    test.put("username",this.edtlogin.getText().toString());
+                    test.put("password",this.edtpassword.getText().toString());
+                    Datalayer d = new Datalayer(test);
                     d.setOnNewsDownloadComplete(this);
                     d.execute();
 

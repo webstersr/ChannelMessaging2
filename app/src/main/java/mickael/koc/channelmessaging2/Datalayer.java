@@ -25,17 +25,12 @@ public class Datalayer extends AsyncTask<String,Integer, String> {
     protected String username;
     protected String pwd;
     protected String url;
+    protected int param2;
     protected HashMap<String,String> hashing;
 
     public Datalayer(String user, String pw)
     {
-        this.url="http://www.raphaelbischof.fr/messaging/?function=connect";
-        this.username=user;
-        this.pwd=pw;
-        HashMap<String,String> test = new HashMap<String, String>();
-        test.put("username",this.username);
-        test.put("password",this.pwd);
-        this.hashing=test;
+
     }
 
     public Datalayer(HashMap<String,String> m)
@@ -50,6 +45,24 @@ public class Datalayer extends AsyncTask<String,Integer, String> {
         }
         this.hashing = test;
     }
+
+    public Datalayer(HashMap<String,String> m,int param1, int param2)
+    {
+        this.param2=param2;
+        if(m.containsKey("url"))
+            this.url = (String)m.get("url").toString();
+
+        HashMap<String,String> test = new HashMap<String, String>();
+        for(Map.Entry<String, String> entry : m.entrySet()) {
+            if(entry.getKey()!="url")
+                test.put(entry.getKey(),entry.getValue());
+        }
+        this.hashing = test;
+    }
+
+
+
+
     public void setOnNewsDownloadComplete (onDownloadCompleteListener listener)
     {
         // Store the listener object
@@ -76,7 +89,7 @@ public class Datalayer extends AsyncTask<String,Integer, String> {
         super.onPostExecute(s);
         for (onDownloadCompleteListener oneListener : listeners)
         {
-            oneListener.onDownloadComplete(s);
+            oneListener.onDownloadComplete(s,this.param2);
         }
     }
 
