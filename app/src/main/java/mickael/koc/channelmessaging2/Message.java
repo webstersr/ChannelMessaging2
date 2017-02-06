@@ -10,6 +10,15 @@ public class Message {
     private String date;
     private String imageUrl;
     private double latitude;
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
     private double longitude;
     private String messageImageUrl;
     private String soundUrl;

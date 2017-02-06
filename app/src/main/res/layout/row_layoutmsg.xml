@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
-    <HorizontalScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:id="@+id/horizontalScrollView"
-        android:layout_weight="0.11">
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -18,19 +12,16 @@
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageView"
-                android:layout_weight="0.03" />
+                android:id="@+id/imageView"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="New Text"
                 android:id="@+id/textView5"
-                android:layout_weight="0.03"
                 android:textColor="#a42222"
                 android:textSize="20dp" />
         </LinearLayout>
-    </HorizontalScrollView>
 
     <TextView
         android:layout_width="wrap_content"

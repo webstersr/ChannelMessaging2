@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,10 +21,11 @@ import java.util.List;
 /**
  * Created by kocm on 23/01/2017.
  */
-public class ChannelActivity extends AppCompatActivity implements onDownloadCompleteListener,AdapterView.OnItemClickListener {
+public class ChannelActivity extends AppCompatActivity implements onDownloadCompleteListener,AdapterView.OnItemClickListener,View.OnClickListener {
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public ListView lstchannel;
+    public Button btnamis;
     private String[] listItems;// = {"item 1", "item 2 ", "list", "android", "item 3", "foobar", "bar", };
     private List<Channel> listChan;
     @Override
@@ -31,7 +33,7 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_channel);
         lstchannel = (ListView)findViewById(R.id.listView);
-
+        btnamis = (Button)findViewById(R.id.btnamis);
         SharedPreferences Gsettings = getSharedPreferences(PREFS_NAME, 0);
         String access = Gsettings.getString("access", "");
         HashMap<String,String> n = new HashMap<String,String>();
@@ -39,6 +41,7 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
         n.put("accesstoken",access);
         Datalayer d = new Datalayer(n);
         d.setOnNewsDownloadComplete(this);
+        btnamis.setOnClickListener(this) ;
         d.execute();
     }
 
@@ -78,4 +81,13 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
         startActivity(myintent);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId()==R.id.btnamis)
+        {
+            Intent myintent = new Intent(getApplicationContext(),AmisActivity.class);
+            startActivity(myintent);
+            Toast.makeText(getApplicationContext(),"okok",Toast.LENGTH_SHORT).show();
+        }
+    }
 }

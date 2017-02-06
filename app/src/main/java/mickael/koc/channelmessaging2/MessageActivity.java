@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,13 +19,14 @@ import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by kocm on 27/01/2017.
  */
-public class MessageActivity extends AppCompatActivity implements onDownloadCompleteListener, View.OnClickListener{
+public class MessageActivity extends AppCompatActivity implements onDownloadCompleteListener, View.OnClickListener,AdapterView.OnItemClickListener{
 
     public static final String PREFS_NAME = "MyPrefsFile";
     private List<Message> lstmessage;
@@ -40,6 +42,7 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
         btnsend = (Button)findViewById(R.id.button2);
         btnsend.setOnClickListener(this);
         img = (ImageView)findViewById(R.id.imageView);
+        lstvmessage.setOnItemClickListener(this);
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
             public void run() {
@@ -77,10 +80,9 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
 
             int top = (v == null) ? 0 : (v.getTop() - lstvmessage.getPaddingTop());
 
-// SET ADAPTER
+            // SET ADAPTER
             lstvmessage.setAdapter(new MessageAdapter(getApplicationContext(),lstmessage));
-// restore index and position
-
+            // restore index and position
             lstvmessage.setSelectionFromTop(index, top);
 
 
@@ -110,5 +112,24 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
             d.setOnNewsDownloadComplete(MessageActivity.this);
             d.execute();
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String pos = Integer.toString(position);
+        String userID = Integer.toString(lstmessage.get(position).getUserID());
+        String nameuser = lstmessage.get(position).getname();
+        String imguser = lstmessage.get(position).getimg();
+        Toast.makeText(getApplicationContext(),userID+" "+nameuser+"  "+imguser,Toast.LENGTH_SHORT).show();
+        UserDataSource u = new UserDataSource(this);
+
+        try {
+            u.open();
+            u.createUser(lstmessage.get(position).getUserID(),nameuser,imguser);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }

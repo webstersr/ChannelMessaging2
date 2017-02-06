@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".MessageActivity" android:label="Liste des Messages" >
             </activity>
+        <activity android:name=".AmisActivity" android:label="Liste des Amis" >
+        </activity>
     </application>
 
 </manifest>
