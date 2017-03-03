@@ -3,6 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:layout_width="202dp"
+        android:layout_height="210dp"
+        android:id="@+id/imageView2"
+        android:src="@drawable/channel_messaging_logo2"
+        android:layout_gravity="center_horizontal"
+        android:transitionName="logo"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

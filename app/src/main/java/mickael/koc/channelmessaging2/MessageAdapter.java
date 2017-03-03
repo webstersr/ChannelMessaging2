@@ -44,6 +44,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             img.setImageBitmap(BitmapFactory.decodeFile(file.toString()));
         }
         else {
+            
             DownloadImageTask n = new DownloadImageTask(values.get(position).getimg(), values.get(position).getname(), new onDownloadCompleteListener() {
                 @Override
                 public void onDownloadComplete(String news, int param1) {

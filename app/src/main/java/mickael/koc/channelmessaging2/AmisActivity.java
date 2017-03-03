@@ -28,7 +28,7 @@ public class AmisActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_amis);
-        amislist = (ListView)findViewById(R.id.listView2);
+        amislist = (ListView)findViewById(R.id.lstvamis);
         UserDataSource u = new UserDataSource(this);
         try {
             u.open();
