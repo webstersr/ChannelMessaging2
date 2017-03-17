@@ -34,7 +34,27 @@ public class FriendsAdapter extends ArrayAdapter<User> {
         View rowView = inflater.inflate(R.layout.row_layoutamis, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.txtvamis);
         ImageView imgamis = (ImageView) rowView.findViewById(R.id.picamis);
+        File dir = new File(Environment.getExternalStorageDirectory()+"/"+values.get(position).getImage()+"/");
+        dir.mkdirs();
+        File file = new File(dir, values.get(position).getImage()+".jpg");
+        if(file.exists())
+        {
+            imgamis.setImageBitmap(BitmapFactory.decodeFile(file.toString()));
+        }
+        else {
+            DownloadImageTask pic = new DownloadImageTask(values.get(position).getName(), values.get(position).getImage(), new onDownloadCompleteListener() {
+                @Override
+                public void onDownloadComplete(String news, int param1) {
 
+                }
+
+                @Override
+                public void onDownloadCompleteImg(String result) {
+
+                }
+            });
+            pic.execute();
+        }
         textView.setText(values.get(position).getName());
         return rowView;
     }

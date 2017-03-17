@@ -1,23 +1,42 @@
 package mickael.koc.channelmessaging2;
 
+import android.Manifest;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.dynamitechetan.flowinggradient.FlowingGradientClass;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.logging.LogRecord;
 
 public class LoginActivity extends AppCompatActivity implements onDownloadCompleteListener, View.OnClickListener {
-
+    //CTRL+ALT+L INDENTATION AUTO
     private Button btnvalider;
     private EditText edtlogin;
+    private TextView txtdef;
+    private ImageView logo;
     private EditText edtpassword;
     public static final String PREFS_NAME = "MyPrefsFile";
     @Override
@@ -27,9 +46,35 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
         setContentView(R.layout.activity_login);
         btnvalider = (Button) findViewById(R.id.button);
         edtlogin = (EditText) findViewById(R.id.edtlogin);
+        logo = (ImageView)findViewById(R.id.imageView2);
+        txtdef = (TextView)findViewById(R.id.txtdef);
         edtpassword = (EditText) findViewById(R.id.edtpassword);
         btnvalider.setOnClickListener(this) ;
+
+        final Handler mHandlerTada = new Handler();
+        final int mShortDelay = 4000; //milliseconds
+        final LinearLayout rl = (LinearLayout) findViewById(R.id.llBackground);
+        final FlowingGradientClass grad = new FlowingGradientClass();
+        grad.setBackgroundResource(R.drawable.translate)
+                .onLinearLayout(rl)
+                .setTransitionDuration(4000)
+                .start();
+        mHandlerTada.postDelayed(new Runnable(){
+            public void run(){
+
+
+                txtdef.clearAnimation();
+                YoYo.with(Techniques.Tada)
+                        .duration(700)
+                        .repeat(1)
+                        .playOn(findViewById(R.id.imageView2));
+                mHandlerTada.postDelayed(this, mShortDelay);
+            }
+        }, mShortDelay);
+
     }
+
+
 
     @Override
     public void onDownloadComplete(String news,int param2) {
@@ -64,11 +109,14 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
 
     }
 
+
     @Override
     public void onClick(View v) {
         switch(v.getId())
         {
             case R.id.button:
+                    Animation animSlideLeft = AnimationUtils.loadAnimation(this, R.anim.slide_left);
+                    txtdef.startAnimation(animSlideLeft);
                     HashMap<String,String> test = new HashMap<String, String>();
                     test.put("url","http://www.raphaelbischof.fr/messaging/?function=connect");
                     test.put("username",this.edtlogin.getText().toString());
@@ -76,6 +124,7 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
                     Datalayer d = new Datalayer(test);
                     d.setOnNewsDownloadComplete(this);
                     d.execute();
+
 
                 break;
 
@@ -87,8 +136,10 @@ public class LoginActivity extends AppCompatActivity implements onDownloadComple
 
     public void changeActivity()
     {
-        Intent myintent = new Intent(getApplicationContext(),ChannelActivity.class);
-        startActivity(myintent);
+        Intent loginIntent = new Intent(LoginActivity.this, ChannelActivity.class);
+        startActivity(loginIntent, ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, logo, "logo").toBundle());
+      /*  Intent myintent = new Intent(getApplicationContext(),ChannelActivity.class);
+        startActivity(myintent);*/
     }
 
 }

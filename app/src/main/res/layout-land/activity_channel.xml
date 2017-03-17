@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="match_parent">
     <fragment
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -12,4 +11,12 @@
         android:name="mickael.koc.channelmessaging2.FragmentPackage.ChannelListFragment"
         android:id="@+id/fragmentA_ID"
         tools:layout="@layout/chanel_list_fragment" />
+    <fragment
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:name="mickael.koc.channelmessaging2.FragmentPackage.MessageFragment"
+        android:id="@+id/fragmentB_ID"
+        tools:layout="@layout/message_list_fragment" />
+
 </LinearLayout>

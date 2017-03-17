@@ -18,10 +18,13 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.List;
 
+import mickael.koc.channelmessaging2.FragmentPackage.ChannelListFragment;
+import mickael.koc.channelmessaging2.FragmentPackage.MessageFragment;
+
 /**
  * Created by kocm on 23/01/2017.
  */
-public class ChannelActivity extends AppCompatActivity implements onDownloadCompleteListener,AdapterView.OnItemClickListener,View.OnClickListener {
+public class ChannelActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,View.OnClickListener {
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public ListView lstchannel;
@@ -34,43 +37,40 @@ public class ChannelActivity extends AppCompatActivity implements onDownloadComp
         setContentView(R.layout.activity_channel);
         lstchannel = (ListView)findViewById(R.id.listView);
         btnamis = (Button)findViewById(R.id.btnamis);
-        SharedPreferences Gsettings = getSharedPreferences(PREFS_NAME, 0);
-        String access = Gsettings.getString("access", "");
-        HashMap<String,String> n = new HashMap<String,String>();
-        n.put("url","http://www.raphaelbischof.fr/messaging/?function=getchannels");
-        n.put("accesstoken",access);
-        Datalayer d = new Datalayer(n);
-        d.setOnNewsDownloadComplete(this);
+
         btnamis.setOnClickListener(this) ;
-        d.execute();
-    }
-
-    @Override
-    public void onDownloadComplete(String news, int param2) {
-        Gson gson = new Gson();
-        Channels obj2 = gson.fromJson(news, Channels.class);
-        obj2.toString();
-        listChan=obj2.getChannels();
-        lstchannel.setAdapter(new ChannelAdapter(getApplicationContext(),obj2.getChannels()));
-        lstchannel.setOnItemClickListener(this);
-        Toast.makeText(getApplicationContext(), news, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onDownloadCompleteImg(String result) {
 
     }
+
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String pos = Integer.toString(position);
-        String chanID = Integer.toString(listChan.get(position).getid());
-        Toast.makeText(getApplicationContext(),pos,Toast.LENGTH_SHORT).show();
-        changeActivity();
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString("channelid", chanID); // Commit the edits! editor.commit();
-        editor.commit();
+        ChannelListFragment fragA = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentA_ID);
+        MessageFragment fragB = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentB_ID);
+        listChan=fragA.listChan;
+        if(fragB == null|| !fragB.isInLayout()){
+
+            String pos = Integer.toString(position);
+            String chanID = Integer.toString(listChan.get(position).getid());
+            Toast.makeText(getApplicationContext(),pos,Toast.LENGTH_SHORT).show();
+            changeActivity();
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("channelid", chanID); // Commit the edits! editor.commit();
+            editor.commit();
+        } else {
+
+            String chanID = Integer.toString(listChan.get(position).getid());
+            SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("channelid", chanID);
+            editor.commit();
+          //  fragB.fillTextView(fragA.listItems[position]);
+            // fragB.filltxtview();
+        }
+
+
     }
 
 

@@ -21,7 +21,7 @@ import java.util.List;
 public class MessageAdapter extends ArrayAdapter<Message> {
     private final Context context;
     private final List<Message> values;
-
+    //CTRL+ALT+L INDENTATION AUTO
     public MessageAdapter(Context context, List<Message> Value) {
         super(context, R.layout.activity_channel, Value);
         this.context = context;
@@ -44,6 +44,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             img.setImageBitmap(BitmapFactory.decodeFile(file.toString()));
         }
         else {
+            
             DownloadImageTask n = new DownloadImageTask(values.get(position).getimg(), values.get(position).getname(), new onDownloadCompleteListener() {
                 @Override
                 public void onDownloadComplete(String news, int param1) {

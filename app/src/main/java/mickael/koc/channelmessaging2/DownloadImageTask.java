@@ -1,9 +1,14 @@
 package mickael.koc.channelmessaging2;
 
+import android.Manifest;
+import android.app.Application;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -32,6 +37,7 @@ class DownloadImageTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
+
         File dir = new File(Environment.getExternalStorageDirectory()+"/"+this.nameimage+"/");
         try {
 
