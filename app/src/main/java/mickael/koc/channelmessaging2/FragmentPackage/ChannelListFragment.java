@@ -1,6 +1,7 @@
 package mickael.koc.channelmessaging2.FragmentPackage;
 
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ public class ChannelListFragment extends Fragment implements onDownloadCompleteL
     public ListView lstchannel;
     public Button btnamis;
     public List<Channel> listChan;
+    public Location loc;
 
 
     @Override
@@ -39,6 +41,7 @@ public class ChannelListFragment extends Fragment implements onDownloadCompleteL
         View v = inflater.inflate(R.layout.chanel_list_fragment,container);
         lstchannel = (ListView)v.findViewById(R.id.listView);
         btnamis = (Button)v.findViewById(R.id.btnamis);
+
         SharedPreferences Gsettings = getActivity().getSharedPreferences(PREFS_NAME, 0);
         String access = Gsettings.getString("access", "");
         HashMap<String,String> n = new HashMap<String,String>();

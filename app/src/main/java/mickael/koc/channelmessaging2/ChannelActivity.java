@@ -2,6 +2,7 @@ package mickael.koc.channelmessaging2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,7 @@ import mickael.koc.channelmessaging2.FragmentPackage.MessageFragment;
 /**
  * Created by kocm on 23/01/2017.
  */
-public class ChannelActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,View.OnClickListener {
+public class ChannelActivity extends GPSActivity implements AdapterView.OnItemClickListener,View.OnClickListener {
 
     public static final String PREFS_NAME = "MyPrefsFile";
     public ListView lstchannel;
@@ -49,6 +50,7 @@ public class ChannelActivity extends AppCompatActivity implements AdapterView.On
         ChannelListFragment fragA = (ChannelListFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentA_ID);
         MessageFragment fragB = (MessageFragment)getSupportFragmentManager().findFragmentById(R.id.fragmentB_ID);
         listChan=fragA.listChan;
+        fragA.loc=this.mCurrentLocation;
         if(fragB == null|| !fragB.isInLayout()){
 
             String pos = Integer.toString(position);

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PersistableBundle;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * Created by kocm on 27/01/2017.
  */
-public class MessageActivity extends AppCompatActivity implements onDownloadCompleteListener, View.OnClickListener,AdapterView.OnItemClickListener{
+public class MessageActivity extends GPSActivity implements onDownloadCompleteListener, View.OnClickListener,AdapterView.OnItemClickListener{
 
     public static final String PREFS_NAME = "MyPrefsFile";
     private List<Message> lstmessage;
@@ -38,6 +39,7 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
     public Button btnsend;
     public EditText edtmsg;
     public ImageView img;
+    public Location loc = this.mCurrentLocation;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +105,7 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
     public void onDownloadComplete(String news, int param2) {
         if(param2==5)
         {
-            Toast.makeText(getApplicationContext(),"Message envoyé",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),"Message envoyé ",Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -143,6 +145,11 @@ public class MessageActivity extends AppCompatActivity implements onDownloadComp
             HashMap<String,String> n = new HashMap<String,String>();
             n.put("url","http://www.raphaelbischof.fr/messaging/?function=sendmessage");
             n.put("accesstoken",access);
+            if(loc != null)
+            {
+                n.put("latitude",Double.toString(loc.getLatitude()));
+                n.put("longitude",Double.toString(loc.getLongitude()));
+            }
             n.put("channelid",channelid);
             n.put("message",edtmsg.getText().toString());//
             Datalayer d = new Datalayer(n,0,5);
